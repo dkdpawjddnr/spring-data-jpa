@@ -49,8 +49,8 @@ public class MemberJpaRepository {
     }
 
     public List<Member> findByUsername(String username){
-        return em.createQuery("Member.findByUsername", Member.class)
-                .setParameter("username", "회원1")
+        return em.createNamedQuery("Member.findByUsername", Member.class)
+                .setParameter("username", username)
                 .getResultList();
     }
 }

@@ -12,6 +12,7 @@ import study.data_jpa.entity.Team;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @SpringBootTest
@@ -142,5 +143,23 @@ public class MemberRepositoryTest {
         for(Member m : result){
             System.out.println("member = " + m);
         }
+    }
+
+    @Test
+    public void returnType(){
+        Member m1 = new Member("AAA", 10);
+        Member m2 = new Member("BBB", 20);
+        memberRepository.save(m1);
+        memberRepository.save(m2);
+
+        //없으면 빈 컬렉션
+        List<Member> members = memberRepository.findListByUsername("AAA");
+
+        //없으면 null
+        Member findMember = memberRepository.findMemberByUsername("AAA");
+        System.out.println("findMember = " + findMember);
+
+        //Optional은 없으면  null 데이터가 있을 수도 있고 없을 수도 있으면 Optional 사용
+        Optional<Member> member = memberRepository.findOptionalByUsername("AAA");
     }
 }

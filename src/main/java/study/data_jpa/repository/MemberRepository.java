@@ -18,4 +18,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     // 많이 쓰이는 JPQL 쿼리 작성 방법
     @Query("select m from Member m where m.username = :username and m.age = :age")
     List<Member> findUser(@Param("username") String username, @Param("age") int age);
+
+    @Query("select m.username from Member m")
+    List<String> findUsernameList();
+
+
 }

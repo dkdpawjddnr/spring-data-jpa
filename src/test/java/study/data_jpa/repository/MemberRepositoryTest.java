@@ -184,6 +184,8 @@ public class MemberRepositoryTest {
 
         //when
         Page<Member> page = memberRepository.findByAge(age, pageRequest);
+        //map은 내부에 것을 바꿔서 다른 결과 (page를 유지하면서 Dto로 변환)
+        Page<MemberDto> map = page.map(m -> new MemberDto(m.getId(), m.getUsername(), null));
 
         //then
         List<Member> content = page.getContent();

@@ -39,8 +39,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findOptionalByUsername(String username); //단건 Optional
 
     //반환타입을 Page, 파라미터 Pageable은 쿼리에 대한 조건 1페이지야, 2페이지야
-    @Query(value =  "select m from Member m left join m.team t",
-    countQuery = "select count(m) from Member m")
-
+    @Query(value = "select m from Member m")
     Page<Member> findByAge(int age, Pageable pageable);
 }

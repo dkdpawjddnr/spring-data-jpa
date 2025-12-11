@@ -1,5 +1,7 @@
 package study.data_jpa.repository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ public class MemberRepositoryTest {
     MemberRepository memberRepository;
     @Autowired
     TeamRepository teamRepository;
+    @PersistenceContext
+    EntityManager em;
 
     @Test
     public void testMember() {
@@ -195,5 +199,31 @@ public class MemberRepositoryTest {
         assertThat(page.getTotalPages()).isEqualTo(2); //전체 페이지 번호
         assertThat(page.isFirst()).isTrue(); //첫번째 항목인가?
         assertThat(page.hasNext()).isTrue(); //다음 페이지가 있는가?
+    }
+
+    @Test
+    public void bulkUpdate(){
+        //given
+        //영속성 컨텍스트에 저장
+        memberRepository.save(new Member("member1", 10));
+        memberRepository.save(new Member("member2", 19));
+        memberRepository.save(new Member("member3", 20));
+        memberRepository.save(new Member("member4", 21));
+        memberRepository.save(new Member("member5", 40));
+
+        //when
+        //DB에 바로 적용해버림 따라서 벌크성 쿼리
+        //따라서 clear()를 먼저 해줘야 함. (영속성컨텍스트 비우기)
+        int resultCount = memberRepository.bulkAgePlus(20);
+        //em.clear();
+
+        //벌크성 쿼리 사용시 조심해야 할 점!
+        //DB에는 41살, 영속성컨텍스트에는 40살로 나옴
+        List<Member> result = memberRepository.findByUsername("member5");
+        Member member5 = result.get(0);
+        System.out.println("member5 = " + member5);
+
+        //then
+        Assertions.assertThat(resultCount).isEqualTo(3);
     }
 }

@@ -3,6 +3,7 @@ package study.data_jpa.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import study.data_jpa.dto.MemberDto;
@@ -41,4 +42,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     //반환타입을 Page, 파라미터 Pageable은 쿼리에 대한 조건 1페이지야, 2페이지야
     @Query(value = "select m from Member m")
     Page<Member> findByAge(int age, Pageable pageable);
+
+    //clear()을 자동으로 해줌
+    @Modifying(clearAutomatically = true)
+    @Query("update Member m set m.age = m.age + 1 where m.age >= :age")
+    int bulkAgePlus(@Param("age") int age);
 }

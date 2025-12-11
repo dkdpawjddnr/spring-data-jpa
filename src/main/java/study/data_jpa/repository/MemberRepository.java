@@ -1,5 +1,6 @@
 package study.data_jpa.repository;
 
+import jakarta.persistence.NamedEntityGraph;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -63,6 +64,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     List<Member> findMemberEntityGraph();
 
     //메서드 이름으로 쿼리에서 특히 편리하다.
-    @EntityGraph(attributePaths = {"team"})
+    //@EntityGraph(attributePaths = {"team"})
+
+    //NamedEntityGraph 사용
+    @EntityGraph("Member.all")
     List<Member> findEntityGraphByUsername(@Param("username") String username);
 }

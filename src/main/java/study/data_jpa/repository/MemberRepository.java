@@ -1,5 +1,6 @@
 package study.data_jpa.repository;
 
+import jakarta.persistence.LockModeType;
 import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.QueryHint;
 import org.springframework.data.domain.Page;
@@ -68,7 +69,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @EntityGraph("Member.all")
     List<Member> findEntityGraphByUsername(@Param("username") String username);
 
-    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly",  value = "true"))
     Member findReadOnlyByUsername(String username);
 
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    List<Member> findLockByUsername(String name);
 }

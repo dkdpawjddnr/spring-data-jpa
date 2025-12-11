@@ -245,7 +245,7 @@ public class MemberRepositoryTest {
 
         //when N + 1문제 발생
         //select Member 1
-        List<Member> members = memberRepository.findMemberFetchJoin();
+        List<Member> members = memberRepository.findEntityGraphByUsername("member1");
 
         //then
         for (Member member : members){

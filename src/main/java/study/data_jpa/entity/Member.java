@@ -11,7 +11,7 @@ import lombok.*;
         name="Member.findByUsername",
         query="select m from Member m where m.username = :username")
 @NamedEntityGraph(name = "Member.all", attributeNodes = @NamedAttributeNode("team"))
-public class Member {
+public class Member extends JpaBaseEntity{
 
     @Id @GeneratedValue
     @Column(name = "member_id")

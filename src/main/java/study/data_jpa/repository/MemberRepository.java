@@ -14,6 +14,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+// @Repository 의 의미 1. 스프링빈에 컨포넌트 스캔 대상.
+// 2. 예외가 터지면 JPA 예외를 스프링이 추상화한 예외로 변환
+// @Transaction
+// 트랜잭션을 걸고 들어오면 그 트랜잭션을 이어받음,
+// 트랜잭션이 없어도 스프링 DATA JPA는 자기 레포지토리 계층에서 트랜잭션을 시작한다.
 public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
 
     // 스프링 데이터 JPA는 메서드 이름을 분석해서 JPQL을 생성하고 실행

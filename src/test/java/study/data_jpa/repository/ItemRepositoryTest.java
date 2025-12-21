@@ -16,7 +16,7 @@ class ItemRepositoryTest {
     @Test
     public void save(){
         //@GeneratedValue는 Jpa에 persist하면 Id값이 생성이 됨.
-        Item item = new Item();
+        Item item = new Item("A");
         itemRepository.save(item);
     }
 }

@@ -19,7 +19,7 @@ import java.util.Optional;
 // @Transaction
 // 트랜잭션을 걸고 들어오면 그 트랜잭션을 이어받음,
 // 트랜잭션이 없어도 스프링 DATA JPA는 자기 레포지토리 계층에서 트랜잭션을 시작한다.
-public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
+public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom, JpaSpecificationExecutor<Member>{
 
     // 스프링 데이터 JPA는 메서드 이름을 분석해서 JPQL을 생성하고 실행
     List<Member> findByUsernameAndAgeGreaterThan(String username, int age);

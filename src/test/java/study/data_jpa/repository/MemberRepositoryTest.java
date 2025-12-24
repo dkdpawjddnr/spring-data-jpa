@@ -332,4 +332,25 @@ public class MemberRepositoryTest {
 
         Assertions.assertThat(result.get(0).getUsername()).isEqualTo("m1");
     }
+
+    @Test
+    public void projections(){
+        //given
+        Team teamA = new Team("teamA");
+        em.persist(teamA);
+
+        Member m1 = new Member("m1", 0, teamA);
+        Member m2 = new Member("m2", 0, teamA);
+        em.persist(m1);
+        em.persist(m2);
+        em.flush();
+        em.clear();
+
+        //when
+        List<UsernameOnly> result = memberRepository.findProjectionsByUsername("m1");
+
+        //구현체가 아니라 인터페이스인데 프록시 기술을 통해서 가짜 객체를 만들어줌 (구현체는 SpringDataJpa가 만들어줌)
+        //then
+        Assertions.assertThat(result.size()).isEqualTo(1);
+    }
 }

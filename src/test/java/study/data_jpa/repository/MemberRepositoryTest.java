@@ -347,7 +347,7 @@ public class MemberRepositoryTest {
         em.clear();
 
         //when
-        List<UsernameOnly> result = memberRepository.findProjectionsByUsername("m1");
+        List<UsernameOnlyDto> result = memberRepository.findProjectionsByUsername("m1");
 
         //구현체가 아니라 인터페이스인데 프록시 기술을 통해서 가짜 객체를 만들어줌 (구현체는 SpringDataJpa가 만들어줌)
         //then

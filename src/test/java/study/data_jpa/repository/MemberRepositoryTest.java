@@ -347,10 +347,15 @@ public class MemberRepositoryTest {
         em.clear();
 
         //when
-        List<UsernameOnlyDto> result = memberRepository.findProjectionsByUsername("m1");
+        List<NestedClosedProjection> result = memberRepository.findProjectionsByUsername("m1", NestedClosedProjection.class);
 
-        //구현체가 아니라 인터페이스인데 프록시 기술을 통해서 가짜 객체를 만들어줌 (구현체는 SpringDataJpa가 만들어줌)
-        //then
+        for (NestedClosedProjection nestedClosedProjection : result){
+            String username = nestedClosedProjection.getUsername();
+            System.out.println("username = " + username);
+            String teamName = nestedClosedProjection.getTeam().getName();
+            System.out.println("teamName = " + teamName);
+        }
+
         Assertions.assertThat(result.size()).isEqualTo(1);
     }
 }
